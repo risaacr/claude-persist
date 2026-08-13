@@ -184,7 +184,7 @@ This plugin is a **fork** of `anthropics/claude-code/plugins/ralph-wiggum`. The 
 
 3. **Session ID propagation.** The fork's `setup-ralph-loop.sh` requires the session ID as the first argument, passed by the slash command which determines it from `/tmp/statusline-{SESSION_ID}.json` lookup. Upstream relies on the implicit project-scoped path which has the multi-session bug.
 
-**Maintained at:** https://github.com/versedhand/claude-persist
+**Maintained at:** https://github.com/risaacr/claude-persist
 
 **Upstream commits since fork (verified Apr 7 2026):**
 - `c2022d3` fix(ralph-wiggum): add :* to allowed-tools pattern (#16522) — minor, doesn't address fork issues
