@@ -12,15 +12,18 @@ hide-from-slash-command-tool: "true"
 Determine YOUR session ID and create the state file:
 
 ```bash
-# Find the session with the MOST RECENTLY modified transcript.
-# With multiple active sessions, the one running this command will have
-# the freshest transcript (it's actively writing tool calls to it).
-SESSION_ID=""
+# ⭐ Claude Code substitutes ${CLAUDE_SESSION_ID} into this command text with THIS session's id
+# (2026-11-16). The old discovery looked only in the isaac-life-corpus project dir, whose sessions
+# no longer exist, so from every other corpus SESSION_ID was empty and the Stop hook (which keys
+# /tmp/ralph-loop-<session_id>.md by its real id) never found a state file: the loop never armed.
+# Fallback for a build without the substitution: newest transcript in ANY project dir.
+SESSION_ID="${CLAUDE_SESSION_ID}"
+case "$SESSION_ID" in *[!0-9a-f-]*|"") SESSION_ID="" ;; esac
 NEWEST_AGE=999999
-for f in /tmp/statusline-*.json; do
+[ -n "$SESSION_ID" ] || for f in /tmp/statusline-*.json; do
   sid=$(jq -r '.session_id // ""' "$f" 2>/dev/null)
-  transcript="$HOME/.claude/projects/-home-rrobinson-corpus-isaac-life-corpus/${sid}.jsonl"
-  if [ -f "$transcript" ]; then
+  transcript=$(ls "$HOME"/.claude/projects/*/"${sid}".jsonl 2>/dev/null | head -1)
+  if [ -n "$sid" ] && [ -f "$transcript" ]; then
     age=$(( $(date +%s) - $(stat -c %Y "$transcript") ))
     if [ "$age" -lt 60 ] && [ "$age" -lt "$NEWEST_AGE" ]; then
       NEWEST_AGE="$age"
