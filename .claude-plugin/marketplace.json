@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-persist",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Self-referential AI development loops for Claude Code. Fork of ralph-wiggum with session isolation, exit protocol fix, and crash prevention.",
   "owner": {
     "name": "Isaac Robinson",
@@ -11,7 +11,7 @@
     {
       "name": "claude-persist",
       "description": "Iterative self-referential loops — Claude works on a task repeatedly until completion. Session-isolated, crash-proof.",
-      "version": "2.0.0",
+      "version": "2.0.1",
       "author": {
         "name": "Isaac Robinson",
         "email": "isaac@versedhand.com"
